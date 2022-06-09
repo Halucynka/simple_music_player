@@ -100,7 +100,7 @@ class SimpleMusicPlayer:
             self.play()
 
     def select_random_song(self):
-        self.current_song_index = random.choice([index for index in range(0, len(self.chosen_songs_paths))])
+        self.current_song_index = random.choice([index for index, _ in enumerate(self.chosen_songs_paths)])
         self.play()
 
     def play(self):
