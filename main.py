@@ -64,6 +64,8 @@ class SimpleMusicPlayer:
 
     def clear_playlist(self):
         self.song_listbox.delete(0, END)
+        self.chosen_songs_paths = []
+        self.current_song_index = 0
 
     def update_text(self):
         # update label describing current song playing
@@ -71,13 +73,12 @@ class SimpleMusicPlayer:
         self.label.configure(text=song_name)
 
     def add_songs_listbox(self):
+        # Get selected songs and add them to playlist if they are not in it already
         chosen_songs = filedialog.askopenfilenames()
         for song in chosen_songs:
             if song not in self.chosen_songs_paths:
                 self.chosen_songs_paths.append(song)
-            song_name = os.path.basename(song)
-            listbox_current_list = self.song_listbox.get(0, self.song_listbox.size())
-            if song_name not in listbox_current_list:
+                song_name = os.path.basename(song)
                 self.song_listbox.insert(END, song_name)
 
     def select_song(self):
@@ -100,7 +101,6 @@ class SimpleMusicPlayer:
 
     def select_random_song(self):
         self.current_song_index = random.choice([index for index in range(0, len(self.chosen_songs_paths))])
-        print(self.current_song_index)
         self.play()
 
     def play(self):
